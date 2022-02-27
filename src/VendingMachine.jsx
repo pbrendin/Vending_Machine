@@ -2,61 +2,64 @@ import { Collapse } from "bootstrap";
 import React, { Component } from "react";
 
 export default class VendingMachine extends Component {
-  state = {
-    pageTitle: "Products",
-    productCount: 2,
-    changeAmount: 0,
-    moneyInserted: 0,
-    numberOfDollars: 0,
-    numberOfFiveDollars: 0,
-    numberOfQuarters: 0,
-    numberOfDimes: 0,
-    numberOfNickles: 0,
-    valueOfDollar: 1,
-    valueOfFiveDollars: 5,
-    valueOfQuarter: 0.25,
-    valueOfDime: 0.1,
-    valueOfNickel: 0.05,
-    billFiveQuantity: 0,
-    billOneQuantity: 0,
-    coinQuarterQuantity: 0,
-    coinDimeQuantity: 0,
-    coinNickelQuantity: 0,
-    productName: [
-      {
-        name: "Fizz",
-        desc: "An effervescent fruity experience with hints of grape and coriander.",
-        price: 1,
-        amount: { amt_remain: 12, max_amount: 100 },
-        photo:
-          "https://atlas-content1-cdn.pixelsquid.com/assets_v2/127/1276922850573292666/jpeg-600/G16.jpg",
-      },
-      {
-        name: "Pop",
-        desc: "An explosion of flavor that will knock your socks off!",
-        price: 1,
-        amount: { amt_remain: 25, max_amount: 200 },
-        photo:
-          "https://atlas-content1-cdn.pixelsquid.com/assets_v2/127/1273408777629996108/jpeg-600/G13.jpg",
-      },
-      {
-        name: "Cola",
-        desc: "A basic no nonsense cola that is the perfect pick me up for any occasion.",
-        price: 1,
-        amount: { amt_remain: 25, max_amount: 100 },
-        photo:
-          "https://atlas-content1-cdn.pixelsquid.com/assets_v2/127/1273215019533735338/jpeg-600/G03.jpg",
-      },
-      {
-        name: "Mega Pop",
-        desc: "Not for the faint of heart.  So flavorful and so invigorating, it should probably be illegal.",
-        price: 1,
-        amount: { amt_remain: 25, max_amount: 50 },
-        photo:
-          "https://t3.ftcdn.net/jpg/00/66/97/22/360_F_66972273_DZ2iAaBiYdZ9pfwhiPmBRvjf7LmlYfKc.jpg",
-      },
-    ],
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      pageTitle: "Products",
+      productCount: 2,
+      changeAmount: 0,
+      moneyInserted: 0,
+      numberOfDollars: 0,
+      numberOfFiveDollars: 0,
+      numberOfQuarters: 0,
+      numberOfDimes: 0,
+      numberOfNickles: 0,
+      valueOfDollar: 1,
+      valueOfFiveDollars: 5,
+      valueOfQuarter: 0.25,
+      valueOfDime: 0.1,
+      valueOfNickel: 0.05,
+      billFiveQuantity: 0,
+      billOneQuantity: 0,
+      coinQuarterQuantity: 0,
+      coinDimeQuantity: 0,
+      coinNickelQuantity: 0,
+      productName: [
+        {
+          name: "Fizz",
+          desc: "An effervescent fruity experience with hints of grape and coriander.",
+          price: 1,
+          amount: { amt_remain: 12, max_amount: 100 },
+          photo:
+            "https://atlas-content1-cdn.pixelsquid.com/assets_v2/127/1276922850573292666/jpeg-600/G16.jpg",
+        },
+        {
+          name: "Pop",
+          desc: "An explosion of flavor that will knock your socks off!",
+          price: 1,
+          amount: { amt_remain: 25, max_amount: 200 },
+          photo:
+            "https://atlas-content1-cdn.pixelsquid.com/assets_v2/127/1273408777629996108/jpeg-600/G13.jpg",
+        },
+        {
+          name: "Cola",
+          desc: "A basic no nonsense cola that is the perfect pick me up for any occasion.",
+          price: 1,
+          amount: { amt_remain: 25, max_amount: 100 },
+          photo:
+            "https://atlas-content1-cdn.pixelsquid.com/assets_v2/127/1273215019533735338/jpeg-600/G03.jpg",
+        },
+        {
+          name: "Mega Pop",
+          desc: "Not for the faint of heart.  So flavorful and so invigorating, it should probably be illegal.",
+          price: 1,
+          amount: { amt_remain: 25, max_amount: 50 },
+          photo:
+            "https://t3.ftcdn.net/jpg/00/66/97/22/360_F_66972273_DZ2iAaBiYdZ9pfwhiPmBRvjf7LmlYfKc.jpg",
+        },
+      ],
+    };
+  }
   render() {
     return (
       <div>
@@ -233,6 +236,36 @@ export default class VendingMachine extends Component {
         </div>
       </div>
     );
+  }
+
+  componentDidMount() {
+    console.log("componentDidMount");
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log(
+      "ComponentDidUpdate - Vending Machine",
+      prevProps,
+      prevState,
+      this.props,
+      this.state
+    );
+    // if(prevProps.x != this.props.x){
+    //   //Make HTTP CALL
+    // }
+  }
+
+  componentWillUnmount() {
+    console.log("componentWillUnmount - Vending Machine");
+  }
+
+  componentDidCatch(error, info) {
+    console.log("componentDidCatch - Vending Machine");
+    console.log(error, info);
+
+    localStorage.lastError = `${JSON.stringify(error)}\n${JSON.stringify(
+      info
+    )}`;
   }
 
   //Executes when a user clicks the button
