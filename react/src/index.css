@@ -1,0 +1,32 @@
+.highlight {
+  background-color: rgba(119, 187, 30, 0.37);
+}
+
+.navbar-style {
+  background-color: rgb(2, 2, 29) !important;
+  padding: auto !important;
+  box-shadow: 0px 2px 5px;
+}
+
+.green-highlight {
+  color: rgba(4, 136, 4, 0.753);
+  font-size: medium;
+}
+
+.yellow-highlight {
+  color: rgb(190, 190, 37);
+  font-size: medium;
+}
+
+.red-highlight {
+  color: rgba(211, 11, 11, 0.853);
+  font-size: medium;
+}
+
+.small-badge {
+  font-size: medium;
+}
+
+.larger-badge {
+  font-size: small;
+}
