@@ -1,0 +1,7 @@
+{
+    "name": "Fizz",
+    "desc": "An effervescent fruity experience with hints of grape and coriander.",
+    "price": 1,
+    "amount": { "amt_remain": 12, "max_amount": 100 },
+    "pic": "https://atlas-content1-cdn.pixelsquid.com/assets_v2/127/1276922850573292666/jpeg-600/G16.jpg"
+}

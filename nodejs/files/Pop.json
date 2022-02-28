@@ -1,0 +1,7 @@
+{
+    "name": "Pop",
+    "desc": "An explosion of flavor that will knock your socks off!",
+    "price": 1,
+    "amount": { "amt_remain": 25, "max_amount": 200 },
+    "pic": "https://atlas-content1-cdn.pixelsquid.com/assets_v2/127/1273408777629996108/jpeg-600/G13.jpg"
+}

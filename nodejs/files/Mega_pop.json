@@ -1,0 +1,7 @@
+{
+    "name": "Mega Pop",
+    "desc": "Not for the faint of heart.  So flavorful and so invigorating, it should probably be illegal.",
+    "price": 1,
+    "amount": { "amt_remain": 25, "max_amount": 50 },
+    "pic": "https://t3.ftcdn.net/jpg/00/66/97/22/360_F_66972273_DZ2iAaBiYdZ9pfwhiPmBRvjf7LmlYfKc.jpg"
+}
