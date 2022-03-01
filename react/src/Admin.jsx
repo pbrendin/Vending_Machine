@@ -1,69 +1,36 @@
 import { Collapse } from "bootstrap";
 import React, { Component } from "react";
 import download from "downloadjs";
-export default class VendingMachine extends Component {
+export default class Admin extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      vend_details: {
-        pageTitle: "Products",
-        purchasedProduct: "",
-        productCount: 0,
-        changeAmount: 0,
-        moneyInserted: 0,
-        numberOfDollars: 0,
-        numberOfFiveDollars: 0,
-        numberOfQuarters: 0,
-        numberOfDimes: 0,
-        numberOfNickles: 0,
-        valueOfDollar: 1,
-        valueOfFiveDollars: 5,
-        valueOfQuarter: 0.25,
-        valueOfDime: 0.1,
-        valueOfNickel: 0.05,
-        billFiveQuantity: 0,
-        billOneQuantity: 0,
-        coinQuarterQuantity: 0,
-        coinDimeQuantity: 0,
-        coinNickelQuantity: 0,
-      },
-      productName: [
-        {
-          id: 1,
-          name: "Fizz",
-          desc: "An effervescent fruity experience with hints of grape and coriander.",
-          price: 1,
-          amount: { amt_remain: 12, max_amount: 100 },
-          pic: "https://atlas-content1-cdn.pixelsquid.com/assets_v2/127/1276922850573292666/jpeg-600/G16.jpg",
-        },
-        {
-          id: 2,
-          name: "Pop",
-          desc: "An explosion of flavor that will knock your socks off!",
-          price: 1,
-          amount: { amt_remain: 25, max_amount: 200 },
-          pic: "https://atlas-content1-cdn.pixelsquid.com/assets_v2/127/1273408777629996108/jpeg-600/G13.jpg",
-        },
-        {
-          id: 3,
-          name: "Cola",
-          desc: "A basic no nonsense cola that is the perfect pick me up for any occasion.",
-          price: 1,
-          amount: { amt_remain: 25, max_amount: 100 },
-          pic: "https://atlas-content1-cdn.pixelsquid.com/assets_v2/127/1273215019533735338/jpeg-600/G03.jpg",
-        },
-        {
-          id: 4,
-          name: "Mega Pop",
-          desc: "Not for the faint of heart.  So flavorful and so invigorating, it should probably be illegal.",
-          price: 1,
-          amount: { amt_remain: 25, max_amount: 50 },
-          pic: "https://t3.ftcdn.net/jpg/00/66/97/22/360_F_66972273_DZ2iAaBiYdZ9pfwhiPmBRvjf7LmlYfKc.jpg",
-        },
-      ],
+      vend_details: {},
+      products: [],
     };
   }
+  componentDidMount = async () => {
+    console.log("componentDidMount");
+    let response = await fetch("http://localhost:5001/getDetails", {
+      method: "GET",
+    });
+    let prods = await response.json();
+    console.log(prods);
+
+    this.setState({ vend_details: prods });
+
+    response = await fetch("http://localhost:5001/getProducts", {
+      method: "GET",
+    });
+    prods = await response.json();
+    console.log(prods);
+
+    this.setState({ products: prods });
+  };
+
   render() {
+    const { products, vend_details } = this.state;
+    if (Object.keys(vend_details).length === 0) return null;
     return (
       <div>
         <h4 className="border-bottom m-1 p-1">
@@ -106,9 +73,7 @@ export default class VendingMachine extends Component {
                 <h5 className="card-title">
                   You have Entered the following amount:
                 </h5>
-                <p className="card-text float-end">
-                  {this.state.vend_details.moneyInserted.toFixed(2)}
-                </p>
+                <p className="card-text float-end">{}</p>
               </div>
               <div className="card-footer">
                 <span className="float-start">
@@ -242,26 +207,6 @@ export default class VendingMachine extends Component {
     );
   }
 
-  componentDidMount = async () => {
-    console.log("componentDidMount");
-    let response = await fetch("http://localhost:5001/getDetails", {
-      method: "GET",
-    });
-    let prods = await response.json();
-    console.log(prods);
-
-    this.setState({ vend_details: prods });
-
-    response = await fetch("http://localhost:5001/getProducts", {
-      method: "GET",
-    });
-    prods = await response.json();
-    console.log(prods);
-
-    this.setState({ products: prods });
-    //console.log(prods);
-  };
-
   componentDidUpdate(prevProps, prevState) {
     console.log(
       "ComponentDidUpdate - Vending Machine",
@@ -299,44 +244,49 @@ export default class VendingMachine extends Component {
   };
 
   getProductRow = () => {
-    return this.state.productName.map((prod) => {
-      return (
-        <div className="card">
-          <img src={prod.pic} className="card-img-top" alt="card-group-image" />
-          <div className="card-body">
-            <h5 className="card-title">
-              {prod.name}
-              <span className="card-title float-end">${prod.price}</span>
-            </h5>
-            <p className="card-text">{prod.desc}</p>
-          </div>
-          <div className="card-footer">
-            <div>
-              {/* <span className="d-inline badge bg-secondary small-badge"> */}
-              <span
-                className={this.checkProductAmountStatus(
-                  prod.amount.amt_remain
-                )}
-              >
-                {prod.amount.amt_remain}
-              </span>
-              <button
-                type="button"
-                className="d-inline btn btn-primary btn-sm float-end"
-                onClick={() => this.buyProduct(prod)}
-              >
-                Buy Now
-              </button>
+    if (this.state.vend_details.productCount > 0)
+      return this.state.vend_details.productName.map((prod) => {
+        return (
+          <div className="card">
+            <img
+              src={prod.pic}
+              className="card-img-top"
+              alt="card-group-image"
+            />
+            <div className="card-body">
+              <h5 className="card-title">
+                {prod.name}
+                <span className="card-title float-end">${prod.price}</span>
+              </h5>
+              <p className="card-text">{prod.desc}</p>
             </div>
-            <div>
-              <span>
-                <strong>Quantity</strong>
-              </span>
+            <div className="card-footer">
+              <div>
+                {/* <span className="d-inline badge bg-secondary small-badge"> */}
+                <span
+                  className={this.checkProductAmountStatus(
+                    prod.amount.amt_remain
+                  )}
+                >
+                  {prod.amount.amt_remain}
+                </span>
+                <button
+                  type="button"
+                  className="d-inline btn btn-primary btn-sm float-end"
+                  onClick={() => this.buyProduct(prod)}
+                >
+                  Buy Now
+                </button>
+              </div>
+              <div>
+                <span>
+                  <strong>Quantity</strong>
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      );
-    });
+        );
+      });
   };
 
   checkProductAmountStatus = (amount) => {
